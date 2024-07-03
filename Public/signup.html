@@ -12,8 +12,12 @@
   <div class="col-lg-8 col-md-10 col-12 p-lg-5 p-md-4 p-3 mx-auto">
   <h3 class="text-center">Welcome to whatsapp</h3>
   <div class="form-container col-lg-8 mx-auto">
-    <p class="title">Sign In</p>
+    <p class="title">Sign Up</p>
     <form class="form">
+      <div class="input-group">
+        <label for="username">Full Name</label>
+        <input type="text" name="fullname" id="fullname" placeholder="">
+      </div>
       <div class="input-group">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="">
@@ -25,7 +29,7 @@
           <a rel="noopener noreferrer" href="#">Forgot Password ?</a>
         </div>
       </div>
-      <button type="button" class="sign" id="SignIn">Sign in</button>
+      <button type="button" class="sign" id="SignUp">Sign up</button>
     </form>
     <div class="social-message">
       <div class="line"></div>
@@ -49,8 +53,8 @@
         </svg>
       </button>
     </div>
-    <p class="signup">Dont't have an account?
-      <a rel="noopener noreferrer" href="signup.html" class="">Sign up</a>
+    <p class="signup">Already have an account?
+      <a rel="noopener noreferrer" href="index.html" class="">Sign In</a>
     </p>
   </div>
 </div>
@@ -72,7 +76,30 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-  
+    const UpSign = document.getElementById("SignUp")
+
+    const fullname = document.getElementById('fullname').value
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value
+    UpSign.addEventListener('click', () =>{
+   if(fullname ==='' || email ===''|| password ===''){
+  alert('input your details')
+   }else{
+    let UserInfo ={fullname, email,password}
+    localStorage.setItem("UserDetail", JSON.stringify(UserInfo))
+    createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    const user = userCredential.user;
+    console.log(user);
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode, error.message);
+  });
+   }
+
+    })
   </script>
 </body>
 </html>
